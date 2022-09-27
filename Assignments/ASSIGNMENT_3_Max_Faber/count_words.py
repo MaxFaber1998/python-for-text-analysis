@@ -20,6 +20,7 @@ def count(text):
 		word_count_dict[word] = 1
 	return word_count_dict
 
+# Testing
 if __name__ == '__main__':
 	# This string contains 20 words, of which 16 unique words
 	text_to_count = "This text (string) contains punctuation, this punctuation should be removed! "\
