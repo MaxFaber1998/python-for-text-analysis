@@ -21,9 +21,10 @@ def get_talk_id(talk):
 	:param talk:
 	:return:
 	"""
-	talk_id_str = talk.get('id')
+	talk_head = talk.find('head')
+	talk_id = talk_head.find('talkid')
+	talk_id_str = talk_id.text
 	talk_id_int = int(talk_id_str)
-
 	return talk_id_int
 
 
@@ -36,11 +37,10 @@ def get_talk_title(talk):
 	talk_head = talk.find('head')
 	talk_title = talk_head.find('title')
 	talk_title_text = talk_title.text
-
 	return talk_title_text
 
 
-def get_word_token_count_talk(talk):
+def get_word_count_talk(talk):
 	"""
 
 	:param talk: lxml element which contains the information about the talk
@@ -53,41 +53,16 @@ def get_word_token_count_talk(talk):
 	return talk_word_token_count
 
 
-def get_word_count_overview(talks):
+def get_talk_speaker(talk):
 	"""
 
-	:param talks:
+	:param talk:
 	:return:
 	"""
-	talk_overview_list = []
-
-	for talk in talks:
-		talk_id = get_talk_id(talk)
-		talk_title = get_talk_title(talk)
-		talk_word_count = get_word_token_count_talk(talk)
-
-		talk_overview_list.append({
-			'talk_id': talk_id,
-			'talk_title': talk_title,
-			'talk_word_count': talk_word_count
-		})
-
-	return talk_overview_list
-
-
-def get_mean_talk_length(talk_overview_list):
-	"""
-
-	:param talks:
-	:return:
-	"""
-	n_words_talks = []
-
-	for talk_overview in talk_overview_list:
-		n_words_talk = talk_overview['talk_word_count']
-
-		n_words_talks.append(n_words_talk)
-	return sum(n_words_talks) / len(n_words_talks)
+	talk_head = talk.find('head')
+	talk_speaker = talk_head.find('speaker')
+	talk_speaker_text = talk_speaker.text
+	return talk_speaker_text
 
 
 def get_talk_datetime(talk):
@@ -103,31 +78,20 @@ def get_talk_datetime(talk):
 	return talk_date_object
 
 
-def get_datetime_overview(talks):
+def print_talk_info_list(talk_titles, talk_ids):
 	"""
 
-	:param talks:
+	:param talk_titles:
+	:param talk_ids:
 	:return:
 	"""
-	talk_datetime_overview = []
+	talk_info = zip(talk_titles, talk_ids)
+	talk_info = list(talk_info)
 
-	for talk in talks:
-		talk_id = get_talk_id(talk)
-		talk_title = get_talk_title(talk)
-		talk_datetime = get_talk_datetime(talk)
+	for index, talk_tuple in enumerate(talk_info):
+		talk_title, talk_id = talk_tuple
 
-		talk_datetime_overview.append({
-			'talk_id': talk_id,
-			'talk_title': talk_title,
-			'talk_datetime': talk_datetime
-		})
-	return talk_datetime_overview
-
-
-
-# Remove this if not longer necessary, only for testing
-# if __name__ == '__main__':
-	# path_ted_xml_english = '../Data/ted-talks/XML_releases/xml/ted_en-20160408.xml'
-	# root = load_root(path_ted_xml_english)
-	# talks = get_talks(root)
-	# print(get_datetime(talks[0]))
+		print(f"\t'{talk_title}' (id: {talk_id})", end='')
+		if index < len(talk_info) - 1:
+			print(', ')
+	print('.')
