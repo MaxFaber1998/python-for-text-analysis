@@ -1,4 +1,4 @@
-from utils import load_root, get_talks, get_talk_id, get_talk_title, get_talk_speaker, get_talk_word_count, get_talk_datetime, print_talk_info_list
+from utils import load_root, get_talks, get_talk_id, get_talk_title, get_talk_speaker, get_talk_word_count, get_talk_datetime, print_info_lists
 
 
 def find_wc(talks, length='longest'):
@@ -126,12 +126,12 @@ if __name__ == '__main__':
 	print('Talk length:')
 	titles_longest, ids_longest, mean_word_count = find_wc(talks, length='longest')
 	print('Longest talk(s):')
-	print_talk_info_list(titles_longest, ids_longest)
+	print_info_lists(titles_longest, ids_longest, integer_value_description='id')
 
 	# Get and print longest title(s) and id(s) of the shortest talk
 	titles_shortest, ids_shortest, _ = find_wc(talks, length='shortest')
 	print('Shortest talk(s):')
-	print_talk_info_list(titles_shortest, ids_shortest)
+	print_info_lists(titles_shortest, ids_shortest, integer_value_description='id')
 
 	# Print the mean word count
 	print(f'Mean word count: {mean_word_count}\n')
@@ -139,12 +139,12 @@ if __name__ == '__main__':
 	# Get and print the title(s) and id(s) of the latest talk(s)
 	titles_latest, ids_latest = find_date(talks, time='latest')
 	print('Latest talk(s):')
-	print_talk_info_list(titles_latest, ids_latest)
+	print_info_lists(titles_latest, ids_latest, integer_value_description='id')
 
 	# Get and print the title(s) and id(s) of the oldest talk(s)
 	titles_oldest, ids_oldest = find_date(talks, time='oldest')
 	print('Oldest talk(s)')
-	print_talk_info_list(titles_oldest, ids_oldest)
+	print_info_lists(titles_oldest, ids_oldest, integer_value_description='id')
 
 	print()
 
@@ -158,4 +158,4 @@ if __name__ == '__main__':
 		talk_titles = [talk_info_tuple[1] for talk_info_tuple in talk_info_tuple_list]
 
 		print(f'Speaker {speaker} had the following talks:')
-		print_talk_info_list(talk_titles, talk_ids)
+		print_info_lists(talk_titles, talk_ids, integer_value_description='id')

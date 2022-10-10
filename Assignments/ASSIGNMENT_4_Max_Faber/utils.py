@@ -106,28 +106,30 @@ def get_talk_datetime(talk):
 	return talk_date_object
 
 
-def print_talk_info_list(talk_titles, talk_ids):
+def print_info_lists(string_values, integer_values, integer_value_description):
 	"""
-	Prints an indented overview of the given titles and ids
-	This function has been written as it's utilized multiple times and will clean up the code in 'ted_english_analysis.py'
-	:param talk_titles: A list of titles to be printed
-	:param talk_ids: A list of ids to be printed
+	Prints an indented overview of the given string and integer values in the following format:
+		'<string_value>' (<integer_value_description>: <integer_value>)
+	This function has been written as it's utilized multiple times and will therefore clean up redundant code
+	:param string_values: A list of string values to be printed
+	:param integer_values: A list of integer values to be printed
+	:param integer_value_description: String description of the numerical value
 	:return: None
 	"""
-	# Zip the titles and ids together, as they're in the same order
-	talk_info = zip(talk_titles, talk_ids)
-	# Convert the zip object to a list of tuples (titles: first element, ids: second element)
-	talk_info = list(talk_info)
+	# Zip the strings and integers together, as they're in the same order
+	info_zipped = zip(string_values, integer_values)
+	# Convert the zip object to a list of tuples (strings: first element, integers: second element)
+	info_zipped = list(info_zipped)
 
-	# Iterate over the list of tuples with titles and ids
-	for index, talk_tuple in enumerate(talk_info):
-		# Extract the current title and id from the tuple
-		talk_title, talk_id = talk_tuple
+	# Iterate over the list of tuples with strings and integers
+	for index, val_tuple in enumerate(info_zipped):
+		# Extract the current string and integer from the tuple
+		string_value, integer_value = val_tuple
 
-		# Print the title with it's corresponding id with a tab at the start in order to improve readability
-		print(f"\t'{talk_title}' (id: {talk_id})", end='')
+		# Print the string with it's corresponding integer with a tab at the start in order to improve readability
+		print(f"\t'{string_value}' ({integer_value_description}: {integer_value})", end='')
 		# Check if the current iteration is not the latest one
-		if index < len(talk_info) - 1:
+		if index < len(info_zipped) - 1:
 			# If not, print a comma to showcase it's not the latest element in the output
 			print(',')
 	# Print a period to showcase the end of the overview
