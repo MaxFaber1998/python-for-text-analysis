@@ -134,3 +134,29 @@ def print_info_lists(string_values, integer_values, integer_value_description):
 			print(',')
 	# Print a period to showcase the end of the overview
 	print('.')
+
+
+def assert_key(key, keys):
+	"""
+	Does an assertion check whether the given key is in the list of given keys
+	:param key: The specified key
+	:param keys: List of keys where the given key should be in
+	:return: None
+	"""
+	# Define the base of the assertion message
+	assertion_message = 'Please specify a valid key, possible option(s) are'
+
+	# Iterate over the keys list using the enumerate function, so we also get the current index in each iteration
+	for index, k in enumerate(keys):
+		# Append the key with a space at front to the assertion message
+		assertion_message += f" '{k}'"
+		# List the possible options using ',' and 'and' between the last two options
+		if index < len(keys) - 2:
+			assertion_message += ','
+		elif index < len(keys) - 1:
+			assertion_message += ' and'
+	assertion_message += '!'
+
+	# Perform the actual assertion using the generated assertion message
+	assert key in keys,\
+		assertion_message

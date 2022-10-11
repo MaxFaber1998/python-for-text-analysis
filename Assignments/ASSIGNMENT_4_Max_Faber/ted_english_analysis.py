@@ -1,4 +1,4 @@
-from utils import load_root, get_talks, get_talk_id, get_talk_title, get_talk_speaker, get_talk_word_count, get_talk_datetime, print_info_lists
+from utils import load_root, get_talks, get_talk_id, get_talk_title, get_talk_speaker, get_talk_word_count, get_talk_datetime, print_info_lists, assert_key
 
 
 def find_wc(talks, length='longest'):
@@ -9,10 +9,7 @@ def find_wc(talks, length='longest'):
 	:return: Tuple containing a list of title(s), a list of id(s) and the mean word count (respectively)
 	"""
 	# Check whether the given length is in the possible options
-	keyword_longest = 'longest'
-	keyword_shortest = 'shortest'
-	assert length in [keyword_longest, keyword_shortest],\
-		f"Please specify a valid length requirement, possible options are '{keyword_longest}' and '{keyword_shortest}'!"
+	assert_key(length, ['longest', 'shortest'])
 
 	# As the word count per talk is an expensive function because of nltk.word_tokenize()
 	# and is either required for determining the mean word count as the longest/shortest talk,
@@ -55,10 +52,7 @@ def find_date(talks, time='latest'):
 	:return: Tuple containing a list of title(s) and a list of id(s)
 	"""
 	# Check whether the given time is in the possible options
-	keyword_latest = 'latest'
-	keyword_oldest = 'oldest'
-	assert time in [keyword_oldest, keyword_latest],\
-		f"Please specify a valid time requirement, possible options are '{keyword_latest}' and '{keyword_oldest}'!"
+	assert_key(time, ['latest', 'oldest'])
 
 	if time == 'latest':
 		# Get the talk with the latest datetime
